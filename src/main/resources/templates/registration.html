@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Form - Aeroparker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .registration-card {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background: white;
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+        .required-asterisk {
+            color: #dc3545;
+            margin-left: 3px;
+        }
+        .btn-custom {
+            background: #3498db;
+            color: white;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-card">
+        <div class="form-header">
+            <h1 class="mb-3">🛫 Aeroparker Registration</h1>
+            <p class="text-muted">Join our loyalty program today!</p>
+        </div>
+
+        <form th:action="@{/registration}" th:object="${customer}" method="post">
+            <!-- Email -->
+            <div class="mb-4">
+                <label class="form-label">Email Address <span class="required-asterisk">*</span></label>
+                <input type="email" class="form-control form-control-lg" 
+                       th:field="*{emailAddress}" 
+                       placeholder="example@email.com"
+                       required>
+                <div th:if="${#fields.hasErrors('emailAddress')}" class="text-danger mt-2">
+                    <span th:errors="*{emailAddress}"></span>
+                </div>
+            </div>
+
+            <!-- Title -->
+            <div class="mb-4">
+                <label class="form-label">Title <span class="required-asterisk">*</span></label>
+                <select class="form-select form-select-lg" th:field="*{title}" required>
+                    <option value="">Select Title</option>
+                    <option value="Mr">Mr</option>
+                    <option value="Ms">Ms</option>
+                    <option value="Mrs">Mrs</option>
+                    <option value="Dr">Dr</option>
+                </select>
+            </div>
+
+            <!-- Name Row -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="form-label">First Name <span class="required-asterisk">*</span></label>
+                    <input type="text" class="form-control form-control-lg" 
+                           th:field="*{firstName}" 
+                           placeholder="John"
+                           required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Last Name <span class="required-asterisk">*</span></label>
+                    <input type="text" class="form-control form-control-lg" 
+                           th:field="*{lastName}" 
+                           placeholder="Doe"
+                           required>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="mb-4">
+                <label class="form-label">Address Line 1 <span class="required-asterisk">*</span></label>
+                <input type="text" class="form-control form-control-lg" 
+                       th:field="*{addressLine1}" 
+                       placeholder="123 Main Street"
+                       required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Address Line 2</label>
+                <input type="text" class="form-control form-control-lg" 
+                       th:field="*{addressLine2}" 
+                       placeholder="Apartment, studio, or floor">
+            </div>
+
+            <!-- City and Postcode Row -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="form-label">City</label>
+                    <input type="text" class="form-control form-control-lg" 
+                           th:field="*{city}" 
+                           placeholder="London">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Postcode <span class="required-asterisk">*</span></label>
+                    <input type="text" class="form-control form-control-lg" 
+                           th:field="*{postcode}" 
+                           placeholder="SW1A 1AA"
+                           required>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-custom btn-lg">
+                    ✨ Join Now
+                </button>
+            </div>
+        </form>
+
+        <!-- Error message -->
+        <div th:if="${error}" class="alert alert-danger mt-4" role="alert">
+            ⚠️ <span th:text="${error}"></span>
+        </div>
+    </div>
+</body>
+</html>
